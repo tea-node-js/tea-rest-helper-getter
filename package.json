@@ -1,6 +1,6 @@
 {
   "name": "tea-rest-helper-getter",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,23 +9,23 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/tea-node/tea-rest-helper-getter.git"
+    "url": "git+https://github.com/tea-node-js/tea-rest-helper-getter.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/tea-node/tea-rest-helper-getter/issues"
+    "url": "https://github.com/tea-node-js/tea-rest-helper-getter/issues"
   },
-  "homepage": "https://github.com/tea-node/tea-rest-helper-getter#readme",
+  "homepage": "https://github.com/tea-node-js/tea-rest-helper-getter#readme",
   "devDependencies": {
     "eslint": "^5.12.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.14.0",
     "istanbul": "^1.0.0-alpha.2",
     "mocha": "^5.2.0",
-    "tea-rest": "^1.0.2",
-    "tea-rest-plugin-mysql": "^1.0.3"
+    "tea-rest": "^1.1.8",
+    "tea-rest-plugin-mysql": "^1.0.5"
   },
   "dependencies": {
     "func-delegate": "^0.3.1",
