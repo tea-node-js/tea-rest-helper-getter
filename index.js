@@ -1,4 +1,4 @@
-const delegate = require('func-delegate');
+const validator = require('func-args-validator');
 const _ = require('lodash');
 
 const modelInclude = (params, includes) => {
@@ -28,7 +28,7 @@ const getter = (Model, hook, keyPath) => (
 module.exports = (rest) => {
   const { Sequelize } = rest;
 
-  rest.helper.getter = delegate(getter, [{
+  rest.helper.getter = validator(getter, [{
     name: 'Model',
     type: Sequelize.Model,
     message: 'Model must be a class of Sequelize defined',
