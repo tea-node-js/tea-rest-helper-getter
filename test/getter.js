@@ -63,7 +63,7 @@ describe('tea-rest-helper-getter', () => {
       };
       const book = { id: 20, name: 'JavaScript 高级程序设计' };
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 20 } }, opts);
         return new Promise((resolve) => {
           resolve(book);
@@ -79,16 +79,44 @@ describe('tea-rest-helper-getter', () => {
 
     it('All arguments right no exception id = req.hooks[obj][id]', (done) => {
       const helper = getter(Book, 'book', 'hooks.user.bookId');
+
       const ctx = {
         hooks: {
           user: { bookId: 30 },
         },
         params: { id: 20 },
       };
+
       const book = { id: 20, name: 'JavaScript 高级程序设计' };
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 30 } }, opts);
+        return new Promise((resolve) => {
+          resolve(book);
+        });
+      };
+
+      helper(ctx, (err) => {
+        assert.equal(null, err);
+        assert.equal(ctx.hooks.book, book);
+        done();
+      });
+    });
+
+    it('All arguments right with special key and value', (done) => {
+      const helper = getter(Book, 'book', 'hooks.user.bookId', 'bookId');
+
+      const ctx = {
+        hooks: {
+          user: { bookId: 30 },
+        },
+        params: { id: 20 },
+      };
+
+      const book = { id: 20, name: 'JavaScript 高级程序设计' };
+
+      Book.findOne = (opts) => {
+        assert.deepEqual({ where: { bookId: 30 } }, opts);
         return new Promise((resolve) => {
           resolve(book);
         });
@@ -119,7 +147,7 @@ describe('tea-rest-helper-getter', () => {
 
       const error = Error('Find book error');
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 20 } }, opts);
         return new Promise((resolve, reject) => {
           reject(error);
@@ -155,7 +183,7 @@ describe('tea-rest-helper-getter', () => {
 
       const error = Error('Find book error');
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({
           where: { id: 20 },
           include: [{
@@ -190,7 +218,7 @@ describe('tea-rest-helper-getter', () => {
       };
       const error = Error('Find book error');
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 20 } }, opts);
         return new Promise((resolve, reject) => {
           reject(error);
@@ -224,7 +252,7 @@ describe('tea-rest-helper-getter', () => {
       };
       const error = Error('Find book error');
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 20 } }, opts);
         return new Promise((resolve, reject) => {
           reject(error);
@@ -258,7 +286,7 @@ describe('tea-rest-helper-getter', () => {
       };
       const error = Error('Find book error');
 
-      Book.find = (opts) => {
+      Book.findOne = (opts) => {
         assert.deepEqual({ where: { id: 20 } }, opts);
         return new Promise((resolve, reject) => {
           reject(error);

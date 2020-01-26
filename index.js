@@ -9,14 +9,15 @@ const modelInclude = (params, includes) => {
   return _.map(ret, x => _.clone(includes[x]));
 };
 
-const getter = (Model, hook, keyPath) => (
+const getter = (Model, hook, valuePath, key) => (
   async (ctx, next) => {
-    const id = _.get(ctx, keyPath);
+    const value = _.get(ctx, valuePath);
+    key = key || 'id';
     const include = modelInclude(ctx.params, Model.includes);
-    const opt = { where: { id } };
+    const opt = { where: { [key]: value } };
     if (include) opt.include = include;
     try {
-      const model = await Model.find(opt);
+      const model = await Model.findOne(opt);
       ctx.hooks[hook] = model;
       await next();
     } catch (error) {
@@ -38,11 +39,16 @@ module.exports = (rest) => {
     allowNull: false,
     message: 'Geted instance will hook on req.hooks[hook], so `hook` must be a string',
   }, {
-    name: 'keyPath',
+    name: 'valuePath',
     type: String,
     allowNull: false,
     defaultValue: 'params.id',
     message: 'Gets the value at path of object.',
+  }, {
+    name: 'key',
+    type: String,
+    allowNull: true,
+    message: 'The name of property.',
   }]);
 
   return rest.helper.getter;
